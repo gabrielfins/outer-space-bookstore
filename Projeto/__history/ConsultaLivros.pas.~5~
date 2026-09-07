@@ -1,0 +1,79 @@
+unit ConsultaLivros;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls,
+  Vcl.Grids, Vcl.DBGrids, Vcl.Imaging.pngimage, Vcl.Mask;
+
+type
+  Tfrm_ConsultaLivros = class(TForm)
+    Image1: TImage;
+    lbl_consultar: TLabel;
+    Image2: TImage;
+    Image3: TImage;
+    DBGrid1: TDBGrid;
+    RadioGroup1: TRadioGroup;
+    edt_Consultar: TMaskEdit;
+    procedure RadioGroup1Click(Sender: TObject);
+    procedure Image3Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure Image2Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_ConsultaLivros: Tfrm_ConsultaLivros;
+valor: string;
+implementation
+uses Conetion, CadastroLivros;
+{$R *.dfm}
+
+procedure Tfrm_ConsultaLivros.FormCreate(Sender: TObject);
+begin
+RadioGroup1.ItemIndex := 0;
+end;
+
+procedure Tfrm_ConsultaLivros.Image2Click(Sender: TObject);
+begin
+frm_CadastroLivros.Show;
+end;
+
+procedure Tfrm_ConsultaLivros.Image3Click(Sender: TObject);
+begin
+dm.Livros.Filtered:= False;
+dm.Livros.FilterOptions:= [foCaseInsensitive];
+dm.Livros.Filter:= '' + valor + ' like ' + QuotedStr(edt_consultar.Text + '%');
+dm.Livros.Filtered:= True;
+end;
+
+procedure Tfrm_ConsultaLivros.RadioGroup1Click(Sender: TObject);
+begin
+ if RadioGroup1.ItemIndex=0 then
+   begin
+     valor:= 'nome';
+     lbl_consultar.Caption:= 'Nome do Livro';
+     edt_Consultar.Text := '';
+   end;
+
+ if RadioGroup1.ItemIndex=1 then
+   begin
+     valor:= 'editora';
+     lbl_consultar.Caption:= 'Editora do Livro';
+     edt_Consultar.Text := '';
+   end;
+
+  if radiogroup1.ItemIndex=2 then
+   begin
+     valor:= 'autor';
+     lbl_consultar.Caption:= 'Autor do Livro';
+     edt_Consultar.Text := '';
+   end;
+
+end;
+
+end.

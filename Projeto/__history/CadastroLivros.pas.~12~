@@ -1,0 +1,97 @@
+unit CadastroLivros;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Imaging.pngimage, Vcl.StdCtrls,
+  Vcl.Mask, Vcl.DBCtrls, Vcl.Imaging.jpeg, Vcl.ExtCtrls, Data.DB, Vcl.ExtDlgs;
+
+type
+  Tfrm_CadastroLivros = class(TForm)
+    Image1: TImage;
+    Label1: TLabel;
+    DBEdit1: TDBEdit;
+    Label2: TLabel;
+    Label3: TLabel;
+    DBEdit3: TDBEdit;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    btn_Confirmar: TImage;
+    btn_Adicionar: TImage;
+    btn_Editar: TImage;
+    btn_Excluir: TImage;
+    Label8: TLabel;
+    DBEdit6: TDBEdit;
+    DBLookupComboBox1: TDBLookupComboBox;
+    DBEdit5: TDBEdit;
+    opd: TOpenPictureDialog;
+    DataSource1: TDataSource;
+    img_Capa: TImage;
+    DBComboBox1: TDBComboBox;
+    procedure btn_ConfirmarClick(Sender: TObject);
+    procedure btn_AdicionarClick(Sender: TObject);
+    procedure btn_EditarClick(Sender: TObject);
+    procedure btn_ExcluirClick(Sender: TObject);
+    procedure img_CapaClick(Sender: TObject);
+    procedure DataSource1DataChange(Sender: TObject; Field: TField);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_CadastroLivros: Tfrm_CadastroLivros;
+CaminhoCapa: string;
+implementation
+uses Conetion, CadastroEditoras;
+{$R *.dfm}
+
+procedure Tfrm_CadastroLivros.btn_AdicionarClick(Sender: TObject);
+begin
+dm.Livros.Insert;
+end;
+
+procedure Tfrm_CadastroLivros.btn_ConfirmarClick(Sender: TObject);
+begin
+dm.Livros.Post;
+end;
+
+procedure Tfrm_CadastroLivros.btn_EditarClick(Sender: TObject);
+begin
+dm.Livros.Edit;
+end;
+
+procedure Tfrm_CadastroLivros.btn_ExcluirClick(Sender: TObject);
+begin
+if (application.MessageBox('Deseja realmente excluir o registro?','Excluindo o registro',32+4)=mryes) then
+dm.Livros.Delete;
+end;
+
+procedure Tfrm_CadastroLivros.DataSource1DataChange(Sender: TObject;
+  Field: TField);
+begin
+if FileExists(dm.Livros.FieldByName('capa').AsString)then
+  begin
+  img_Capa.Picture.LoadFromFile(dm.Livros.FieldByName('capa').AsString);
+  end
+else
+  begin
+  img_Capa.Picture := nil;
+  img_Capa.Picture.LoadFromFile('Fotos oficiais/Capa.png');
+  end;
+end;
+
+procedure Tfrm_CadastroLivros.img_CapaClick(Sender: TObject);
+begin
+if opd.Execute then
+begin
+CaminhoCapa:=(opd.FileName);
+img_Capa.Picture.LoadFromFile(CaminhoCapa);
+dm.Livroscapa.value:=CaminhoCapa;
+end;
+end;
+
+end.

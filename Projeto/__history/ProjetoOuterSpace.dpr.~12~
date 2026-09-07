@@ -1,0 +1,32 @@
+program ProjetoOuterSpace;
+
+uses
+  Vcl.Forms,
+  Login in 'Login.pas' {frm_Login},
+  Conetion in 'Conetion.pas' {dm: TDataModule},
+  Menu in 'Menu.pas' {frm_Menu},
+  CadastroFuncionarios in 'CadastroFuncionarios.pas' {frm_CadastroFuncionarios},
+  CadastroEditoras in 'CadastroEditoras.pas' {frm_CadastroEditoras},
+  CadastroLivros in 'CadastroLivros.pas' {frm_CadastroLivros},
+  ConsultaFunciio in 'ConsultaFunciio.pas' {frm_ConsultaFuncionario},
+  ConsultaEditora in 'ConsultaEditora.pas' {frm_ConsultaEditora},
+  ConsultaLivros in 'ConsultaLivros.pas' {frm_ConsultaLivros},
+  ConsultaFuncionario in 'ConsultaFuncionario.pas' {Form3};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(Tfrm_Login, frm_Login);
+  Application.CreateForm(Tdm, dm);
+  Application.CreateForm(Tfrm_Menu, frm_Menu);
+  Application.CreateForm(Tfrm_CadastroFuncionarios, frm_CadastroFuncionarios);
+  Application.CreateForm(Tfrm_CadastroEditoras, frm_CadastroEditoras);
+  Application.CreateForm(Tfrm_CadastroLivros, frm_CadastroLivros);
+  Application.CreateForm(Tfrm_ConsultaFuncionario, frm_ConsultaFuncionario);
+  Application.CreateForm(Tfrm_ConsultaEditora, frm_ConsultaEditora);
+  Application.CreateForm(Tfrm_ConsultaLivros, frm_ConsultaLivros);
+  Application.CreateForm(TForm3, Form3);
+  Application.Run;
+end.

@@ -1,0 +1,54 @@
+unit ConsultaFunciio;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Conetion, Vcl.StdCtrls, Vcl.ExtCtrls,
+  Vcl.Imaging.pngimage, Data.DB, Vcl.Grids, Vcl.DBGrids;
+
+type
+  Tfrm_Consulta_Funcionario = class(TForm)
+    Image1: TImage;
+    RadioGroup1: TRadioGroup;
+    lbl_consultar: TLabel;
+    edt_consultar: TEdit;
+    Image2: TImage;
+    Image3: TImage;
+    DBGrid1: TDBGrid;
+    procedure RadioGroup1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_Consulta_Funcionario: Tfrm_Consulta_Funcionario;
+  valor: string;
+implementation
+
+{$R *.dfm}
+
+procedure Tfrm_Consulta_Funcionario.RadioGroup1Click(Sender: TObject);
+begin
+  if RadioGroup1.ItemIndex=0 then
+  begin
+    valor:= 'nome';
+    lbl_consultar.Caption:= 'Nome do Funcionário';
+  end;
+
+  if RadioGroup1.ItemIndex=1 then
+   begin
+     valor:= 'apelido';
+     lbl_consultar.Caption:= 'Apelido do Funcionário';
+   end;
+
+   if radiogroup1.ItemIndex=2 then
+   begin
+   valor:= 'cpf';
+   lbl_consultar.Caption:= 'Cpf do Funcionário';
+   end;
+end;
+
+end.

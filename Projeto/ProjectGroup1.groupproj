@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{7961FC03-3C57-4101-87D3-25B812F8E395}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="ProjetoOuterSpace.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\..\Downloads\Projeto Login\ProjetoLogin.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="ProjetoOuterSpace">
+        <MSBuild Projects="ProjetoOuterSpace.dproj"/>
+    </Target>
+    <Target Name="ProjetoOuterSpace:Clean">
+        <MSBuild Projects="ProjetoOuterSpace.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ProjetoOuterSpace:Make">
+        <MSBuild Projects="ProjetoOuterSpace.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ProjetoLogin">
+        <MSBuild Projects="..\..\..\Downloads\Projeto Login\ProjetoLogin.dproj"/>
+    </Target>
+    <Target Name="ProjetoLogin:Clean">
+        <MSBuild Projects="..\..\..\Downloads\Projeto Login\ProjetoLogin.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ProjetoLogin:Make">
+        <MSBuild Projects="..\..\..\Downloads\Projeto Login\ProjetoLogin.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="ProjetoOuterSpace;ProjetoLogin"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="ProjetoOuterSpace:Clean;ProjetoLogin:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="ProjetoOuterSpace:Make;ProjetoLogin:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

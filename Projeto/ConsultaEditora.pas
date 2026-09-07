@@ -1,0 +1,92 @@
+unit ConsultaEditora;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls,
+  Vcl.Grids, Vcl.DBGrids, Vcl.Imaging.pngimage, Vcl.Mask;
+
+type
+  Tfrm_ConsultaEditora = class(TForm)
+    Image1: TImage;
+    DBGrid1: TDBGrid;
+    lbl_consultar: TLabel;
+    Image2: TImage;
+    Image3: TImage;
+    RadioGroup1: TRadioGroup;
+    edt_Consultar: TMaskEdit;
+    procedure RadioGroup1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure Image3Click(Sender: TObject);
+    procedure Image2Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_ConsultaEditora: Tfrm_ConsultaEditora;
+valor: string;
+implementation
+uses Conetion, CadastroEditoras;
+{$R *.dfm}
+
+procedure Tfrm_ConsultaEditora.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+edt_Consultar.Text := '';
+dm.Editora.Filtered:= False;
+dm.Editora.FilterOptions:= [foCaseInsensitive];
+dm.Editora.Filter:= ''+valor+' like '+QuotedStr(edt_Consultar.Text + '%');
+dm.Editora.Filtered:= True;
+end;
+
+procedure Tfrm_ConsultaEditora.FormCreate(Sender: TObject);
+begin
+RadioGroup1.ItemIndex := 0;
+end;
+
+procedure Tfrm_ConsultaEditora.Image2Click(Sender: TObject);
+begin
+frm_CadastroEditoras.Show;
+end;
+
+procedure Tfrm_ConsultaEditora.Image3Click(Sender: TObject);
+begin
+dm.Editora.Filtered:= False;
+dm.Editora.FilterOptions:= [foCaseInsensitive];
+dm.Editora.Filter:= ''+valor+' like '+QuotedStr(edt_Consultar.Text + '%');
+dm.Editora.Filtered:= True;
+end;
+
+procedure Tfrm_ConsultaEditora.RadioGroup1Click(Sender: TObject);
+begin
+  if RadioGroup1.ItemIndex=0 then
+  begin
+    valor:= 'nome';
+    lbl_consultar.Caption:= 'Nome da Editora';
+    edt_Consultar.EditMask := '';
+    edt_Consultar.Text := '';
+  end;
+
+  if RadioGroup1.ItemIndex=1 then
+   begin
+     valor:= 'email';
+     lbl_consultar.Caption:= 'Email da Editora';
+     edt_Consultar.EditMask := '';
+     edt_Consultar.Text := '';
+   end;
+
+   if radiogroup1.ItemIndex=2 then
+   begin
+   valor:= 'cnpj';
+   lbl_consultar.Caption:= 'CNPJ da Editora';
+   edt_Consultar.EditMask := '99.999.999/9999-99';
+   edt_Consultar.Text := '';
+   end;
+end;
+
+end.

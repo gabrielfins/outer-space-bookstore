@@ -1,0 +1,128 @@
+unit Login;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Imaging.pngimage,
+  Vcl.ExtCtrls, Vcl.Mask;
+
+type
+  Tfrm_Login = class(TForm)
+    img_Login: TImage;
+    edt_Usuário: TEdit;
+    btn_Entrar: TImage;
+    edt_Senha: TEdit;
+    procedure btn_EntrarClick(Sender: TObject);
+    procedure edt_SenhaKeyPress(Sender: TObject; var Key: Char);
+    procedure edt_SenhaKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure edt_UsuárioKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_Login: Tfrm_Login;
+  nome: string;
+  nivel: integer;
+implementation
+uses Menu, Conetion;
+{$R *.dfm}
+
+procedure Tfrm_Login.btn_EntrarClick(Sender: TObject);
+begin
+  dm.Funcionarios.SQL.Clear;
+  dm.Funcionarios.SQL.Add('select * from funcionario where apelido = '''+edt_Usuário.Text+'''and cpf ='''+edt_Senha.Text+'''');
+  dm.Funcionarios.Open();
+if(dm.Funcionarios.RecordCount>0) then
+begin
+  nome := dm.Funcionarios.FieldByName('nome').AsString;
+  nivel := dm.Funcionarios.FieldByName('nivel').Value;
+  frm_Login.Hide;
+  frm_Menu.ShowModal;
+  frm_Login.Close;
+end
+else
+begin
+  Application.MessageBox('Nome de usuário ou senha incorretos.','Falha ao logar',MB_ICONERROR+MB_OK);
+  edt_Senha.Text := '';
+end;
+end;
+
+procedure Tfrm_Login.edt_SenhaKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+if key = 13 then
+begin
+  dm.Funcionarios.SQL.Clear;
+  dm.Funcionarios.SQL.Add('select * from funcionario where apelido = '''+edt_Usuário.Text+'''and cpf ='''+edt_Senha.Text+'''');
+  dm.Funcionarios.Open();
+if(dm.Funcionarios.RecordCount>0) then
+begin
+  nome := dm.Funcionarios.FieldByName('nome').AsString;
+  nivel := dm.Funcionarios.FieldByName('nivel').Value;
+  frm_Login.Hide;
+  frm_Menu.ShowModal;
+  frm_Login.Close;
+end
+else
+begin
+  Application.MessageBox('Nome de usuário ou senha incorretos.','Falha ao logar',MB_ICONERROR+MB_OK);
+  edt_Senha.Text := '';
+end;
+end;
+end;
+
+procedure Tfrm_Login.edt_SenhaKeyPress(Sender: TObject; var Key: Char);
+begin
+if (Key = #8) then
+      exit;
+
+   if Length(edt_Senha.Text) = 3 then
+      begin
+         edt_Senha.Text := edt_Senha.Text + '.';
+         edt_Senha.Selstart := Length(edt_Senha.text);
+      end;
+
+   if Length(edt_Senha.Text) = 7 then
+      begin
+         edt_Senha.Text := edt_Senha.Text + '.';
+         edt_Senha.Selstart := Length(edt_Senha.text);
+      end;
+
+   if Length(edt_Senha.Text) = 11 then
+      begin
+         edt_Senha.Text := edt_Senha.Text + '-';
+         edt_Senha.Selstart := Length(edt_Senha.text);
+      end;
+
+end;
+
+procedure Tfrm_Login.edt_UsuárioKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+if (key = 13) then
+begin
+  dm.Funcionarios.SQL.Clear;
+  dm.Funcionarios.SQL.Add('select * from funcionario where apelido = '''+edt_Usuário.Text+'''and cpf ='''+edt_Senha.Text+'''');
+  dm.Funcionarios.Open();
+if(dm.Funcionarios.RecordCount>0) then
+begin
+  nome := dm.Funcionarios.FieldByName('nome').AsString;
+  nivel := dm.Funcionarios.FieldByName('nivel').Value;
+  frm_Login.Hide;
+  frm_Menu.ShowModal;
+  frm_Login.Close;
+end
+else
+begin
+  Application.MessageBox('Nome de usuário ou senha incorretos.','Falha ao logar',MB_ICONERROR+MB_OK);
+  edt_Senha.Text := '';
+end;
+end;
+end;
+end.

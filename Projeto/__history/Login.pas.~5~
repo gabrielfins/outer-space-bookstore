@@ -1,0 +1,50 @@
+unit Login;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Imaging.pngimage,
+  Vcl.ExtCtrls, Vcl.Mask;
+
+type
+  Tfrm_Login = class(TForm)
+    img_Login: TImage;
+    edt_Usuário: TEdit;
+    btn_Entrar: TImage;
+    edt_Senha: TEdit;
+    procedure btn_EntrarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_Login: Tfrm_Login;
+  nome: string;
+  nivel: integer;
+implementation
+uses Menu, Conetion;
+{$R *.dfm}
+
+procedure Tfrm_Login.btn_EntrarClick(Sender: TObject);
+begin
+dm.Funcionarios.SQL.Clear;
+dm.Funcionarios.SQL.Add('select * from funcionario where apelido = '''+edt_Usuário.Text+'''and cpf ='''+edt_Senha.Text+'''');
+dm.Funcionarios.Open();
+if(dm.Funcionarios.RecordCount>0) then
+begin
+  nome := dm.Funcionarios.FieldByName('nome').AsString;
+  nivel := dm.Funcionarios.FieldByName('nivel').Value;
+  frm_Login.Hide;
+  frm_Menu.ShowModal;
+  frm_Login.Close;
+end
+else
+begin
+Application.MessageBox('Nome de usuário ou senha incorretos.','Falha ao logar',MB_ICONERROR+MB_OK);
+edt_Senha.Text := '';
+end;
+end;
+end.

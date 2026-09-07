@@ -1,0 +1,74 @@
+unit Conetion;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MySQL,
+  FireDAC.Phys.MySQLDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
+  FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.Client, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.UI, frxClass, frxDBSet;
+
+type
+  Tdm = class(TDataModule)
+    Conection: TFDConnection;
+    FDGUIxWaitCursor1: TFDGUIxWaitCursor;
+    FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink;
+    dsFuncionarios: TDataSource;
+    Editora: TFDTable;
+    dsEditora: TDataSource;
+    Livros: TFDTable;
+    dsLivros: TDataSource;
+    Funcionarios: TFDQuery;
+    Funcionarios2: TFDTable;
+    Funcionarios2cod: TFDAutoIncField;
+    Funcionarios2endereco: TStringField;
+    Funcionarios2bairro: TStringField;
+    Funcionarios2cep: TStringField;
+    Funcionarios2cidade: TStringField;
+    Funcionarios2estado: TStringField;
+    Funcionarios2salario: TFloatField;
+    Funcionarios2nascimento: TDateField;
+    Funcionarios2cpf: TStringField;
+    Funcionarios2email: TStringField;
+    Funcionarios2apelido: TStringField;
+    Funcionarios2telefone: TStringField;
+    Funcionarios2nome: TStringField;
+    Funcionarios2nivel: TIntegerField;
+    frxDBLivros: TfrxDBDataset;
+    frxLivros: TfrxReport;
+    Editoracod: TFDAutoIncField;
+    Editoranome: TStringField;
+    Editoracnpj: TStringField;
+    Editoraendereco: TStringField;
+    Editoracidade: TStringField;
+    Editoraestado: TStringField;
+    Livrosnome: TStringField;
+    Livrosgênero: TStringField;
+    Livrosautor: TStringField;
+    Livroscapa: TStringField;
+    Livroseditora: TStringField;
+    Livroscod: TFDAutoIncField;
+    Livrosano: TStringField;
+    frxDBEditora: TfrxDBDataset;
+    frxEditora: TfrxReport;
+    frxDBFuncionarios: TfrxDBDataset;
+    frxFuncionarios: TfrxReport;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  dm: Tdm;
+
+implementation
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+
+{$R *.dfm}
+
+
+end.

@@ -1,0 +1,142 @@
+unit Menu;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ComCtrls, Vcl.ExtCtrls, ShellAPI,
+  Vcl.Imaging.pngimage;
+
+type
+  Tfrm_Menu = class(TForm)
+    MainMenu1: TMainMenu;
+    CadastrodeFuncionrios1: TMenuItem;
+    Funcionrios1: TMenuItem;
+    Editoras1: TMenuItem;
+    Livros1: TMenuItem;
+    Consulta1: TMenuItem;
+    Funcionrios2: TMenuItem;
+    Editoras2: TMenuItem;
+    Livros2: TMenuItem;
+    Sair1: TMenuItem;
+    StatusBar1: TStatusBar;
+    Deslogar1: TMenuItem;
+    Timer1: TTimer;
+    Relatrios1: TMenuItem;
+    Image1: TImage;
+    Funcionrios3: TMenuItem;
+    Editoras3: TMenuItem;
+    Livros3: TMenuItem;
+    procedure Funcionrios1Click(Sender: TObject);
+    procedure CadastrodeFuncionrios1Click(Sender: TObject);
+    procedure Consulta1Click(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure Editoras1Click(Sender: TObject);
+    procedure Livros1Click(Sender: TObject);
+    procedure Deslogar1Click(Sender: TObject);
+    procedure Sair1Click(Sender: TObject);
+    procedure Funcionrios2Click(Sender: TObject);
+    procedure Editoras2Click(Sender: TObject);
+    procedure Livros2Click(Sender: TObject);
+    procedure Funcionrios3Click(Sender: TObject);
+    procedure Editoras3Click(Sender: TObject);
+    procedure Livros3Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_Menu: Tfrm_Menu;
+
+implementation
+uses Login, Conetion, CadastroFuncionarios, CadastroEditoras, CadastroLivros, ConsultaFuncionario, ConsultaEditora, ConsultaLivros;
+{$R *.dfm}
+
+procedure Tfrm_Menu.CadastrodeFuncionrios1Click(Sender: TObject);
+begin
+if(nivel = 1) then
+begin
+  frm_Menu.Funcionrios1.Visible := False;
+  frm_Menu.Funcionrios2.Visible := False;
+end;
+end;
+
+procedure Tfrm_Menu.Consulta1Click(Sender: TObject);
+begin
+if(nivel = 1) then
+begin
+  frm_Menu.Funcionrios1.Visible := false;
+  frm_Menu.Funcionrios2.Visible := false;
+end;
+end;
+
+procedure Tfrm_Menu.Deslogar1Click(Sender: TObject);
+begin
+if(application.MessageBox('Deseja realmente deslogar do sistema?','Outer Space Bookstore', mb_IconQuestion+mb_YesNo)=mrYes) then
+ShellExecute(Handle,'',PChar(Application.ExeName),'','',SW_SHOW);
+Application.Terminate;
+end;
+
+procedure Tfrm_Menu.Editoras1Click(Sender: TObject);
+begin
+frm_CadastroEditoras.ShowModal;
+end;
+
+procedure Tfrm_Menu.Editoras2Click(Sender: TObject);
+begin
+frm_ConsultaEditora.Show;
+end;
+
+procedure Tfrm_Menu.Editoras3Click(Sender: TObject);
+begin
+dm.frxEditora.ShowReport();
+end;
+
+procedure Tfrm_Menu.Funcionrios1Click(Sender: TObject);
+begin
+frm_CadastroFuncionarios.ShowModal;
+end;
+
+procedure Tfrm_Menu.Funcionrios2Click(Sender: TObject);
+begin
+frm_ConsultaFuncionario2.ShowModal;
+end;
+
+procedure Tfrm_Menu.Funcionrios3Click(Sender: TObject);
+begin
+dm.frxFuncionarios.ShowReport();
+end;
+
+procedure Tfrm_Menu.Livros1Click(Sender: TObject);
+begin
+frm_CadastroLivros.ShowModal;
+end;
+
+procedure Tfrm_Menu.Livros2Click(Sender: TObject);
+begin
+frm_ConsultaLivros.ShowModal;
+end;
+
+procedure Tfrm_Menu.Livros3Click(Sender: TObject);
+begin
+dm.frxLivros.ShowReport();
+end;
+
+procedure Tfrm_Menu.Sair1Click(Sender: TObject);
+begin
+  if(application.MessageBox('Deseja realmente fechar o programa?','Outer Space Bookstore', mb_IconQuestion+mb_YesNo)=mrYes) then
+  begin
+    application.Terminate;
+  end;
+end;
+
+procedure Tfrm_Menu.Timer1Timer(Sender: TObject);
+begin
+  StatusBar1.Panels[0].Text := 'Seja Bem Vindo, ' + nome;
+  StatusBar1.Panels[1].Text := 'Data: ' + datetostr(date);
+  StatusBar1.Panels[2].Text := 'Hora: ' + timetostr(time);
+end;
+
+end.
